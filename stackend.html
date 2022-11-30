@@ -1,0 +1,125 @@
+ l<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>abcd</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+    <style>
+        body,
+        html {
+            /* background: #181E24; */
+            padding-top: 10px;
+        }
+
+        .wrapper {
+            width: 60%;
+            display: block;
+            overflow: hidden;
+            margin: 0 auto;
+            padding: 60px 50px;
+            background: #fff;
+            border-radius: 4px;
+        }
+
+        canvas {
+            background: #fff;
+            height: 400px;
+        }
+
+        h1 {
+            font-family: Roboto;
+            color: #fff;
+            margin-top: 50px;
+            font-weight: 200;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <canvas id="myChart4"></canvas>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+        integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0">
+    </script>
+
+
+    <script>
+
+        // Label formatter function
+        const formatter = (value, ctx) => {
+            const otherDatasetIndex = ctx.datasetIndex === 0 ? 1 : 0;
+            const total =
+                ctx.chart.data.datasets[otherDatasetIndex].data[ctx.dataIndex] + value;
+
+            // return `${(value / total * 100).toFixed(0)}%`;
+            return `${value}%`;
+        };
+
+
+
+        var ctx = document.getElementById("myChart4").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Agu', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Light Green',
+                    backgroundColor: "#caf270",
+                    data: [618, 712, 416, 259, 124, 325, 229, 668, 236, 854, 748, 214],
+                }, {
+                    label: 'Dark Green',
+                    backgroundColor: "#45c490",
+                    data: [618, 712, 416, 259, 124, 325, 229, 668, 236, 854, 748, 214],
+                    datalabels: {
+                        color: "Black",
+                        formatter: formatter
+                    }
+                }],
+            },
+            options: {
+                tooltips: {
+                    displayColors: true,
+                    callbacks: {
+                        mode: 'x',
+                    },
+                },
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                        gridLines: {
+                            display: false,
+                        }
+                    }],
+                    yAxes: [{
+                        stacked: true,
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        type: 'linear',
+                    }]
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: { position: 'bottom' },
+            }
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+</body>
+
+</html>
